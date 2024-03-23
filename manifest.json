@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter Username Displayname Logger",
+  "version": "1.0",
+  "description": "Logs Twitter usernames and display names as the user scrolls.",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
