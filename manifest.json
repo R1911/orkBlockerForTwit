@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Twitter Username Displayname Logger",
+  "name": "Twitter Softblocker",
   "version": "1.0",
-  "description": "Logs Twitter usernames and display names as the user scrolls.",
+  "description": "Removes users defined from feed.",
   "permissions": ["activeTab"],
   "content_scripts": [
     {
