@@ -1,52 +1,103 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Load default filters
+function initializeDefaultFilters() {
   const defaultFilters = ["☭", "🇷🇺", "🇿"];
-  const defaultFiltersList = document.getElementById("defaultFilters");
-  defaultFilters.forEach((filter) => {
-    const li = document.createElement("li");
-    li.textContent = filter;
-    defaultFiltersList.appendChild(li);
-  });
-
-  // Load custom filters
-  loadCustomFilters();
-
-  // Add custom filter
-  const addCustomFilterButton = document.getElementById("addCustomFilter");
-  const customFilterInput = document.getElementById("customFilterInput");
-  addCustomFilterButton.addEventListener("click", function () {
-    const filter = customFilterInput.value.trim();
-    if (filter) {
-      const li = document.createElement("li");
-      li.textContent = filter;
-      defaultFiltersList.appendChild(li);
-      customFilterInput.value = "";
-
-      // Save custom filter to storage
-      saveCustomFilter(filter);
+  browser.storage.local.get(["defaultFilters", "disabledDefaultFilters"], function (data) {
+    if (!data.defaultFilters) { // Set default filters if they are not initialized
+      browser.storage.local.set({ defaultFilters: defaultFilters, disabledDefaultFilters: [] });
     }
   });
-});
+}
 
-// Load custom filters
-function loadCustomFilters() {
-  browser.storage.local.get("customFilters", function (data) {
+function loadFilters() {
+  browser.storage.local.get(["defaultFilters", "customFilters", "disabledDefaultFilters"], function(data) {
+    const defaultFilters = data.defaultFilters || [];
     const customFilters = data.customFilters || [];
+    const disabledFilters = data.disabledDefaultFilters || [];
+
+    const defaultFiltersList = document.getElementById("defaultFilters");
+    defaultFiltersList.innerHTML = '';
+    defaultFilters.forEach(filter => {
+      const isEnabled = !disabledFilters.includes(filter);
+      addFilterToList(filter, "defaultFilters", true, false, isEnabled);
+    });
+
     const customFiltersList = document.getElementById("customFilters");
-    customFilters.forEach((filter) => {
-      const li = document.createElement("li");
-      li.textContent = filter;
-      customFiltersList.appendChild(li);
+    customFiltersList.innerHTML = '';
+    customFilters.forEach(filter => {
+      addFilterToList(filter, "customFilters", false, true, true);
     });
   });
 }
 
-// Save custom filter to storage
+function addFilterToList(filter, listId, isDefault = false, isCustom = false, isEnabled = true) {
+  const list = document.getElementById(listId);
+  const li = document.createElement("li");
+  li.className = isEnabled ? '' : 'disabled'; // Apply disabled class at the li level
+
+  const textSpan = document.createElement("span");
+  textSpan.className = 'filter-text';
+  textSpan.textContent = filter;
+
+  const actionIcon = document.createElement("span");
+  actionIcon.className = 'action-icon';
+  actionIcon.innerHTML = isEnabled ? (isCustom ? "❌" : "🚫") : "✅";  // Toggle icons based on state
+  actionIcon.onclick = function() {
+    if (isCustom) {
+      deleteCustomFilter(filter);
+    } else {
+      toggleDefaultFilter(filter, !isEnabled); // Toggle the state
+    }
+  };
+
+  li.appendChild(textSpan);
+  li.appendChild(actionIcon);
+  list.appendChild(li);
+}
+
+
+
+
 function saveCustomFilter(filter) {
-  // Use browser storage API to save custom filters
   browser.storage.local.get("customFilters", function (data) {
     const customFilters = data.customFilters || [];
-    customFilters.push(filter);
-    browser.storage.local.set({ customFilters: customFilters });
+    if (!customFilters.includes(filter)) {
+      customFilters.push(filter);
+      browser.storage.local.set({ customFilters: customFilters });
+    }
   });
 }
+
+function deleteCustomFilter(filter) {
+  browser.storage.local.get("customFilters", function (data) {
+    let customFilters = data.customFilters || [];
+    customFilters = customFilters.filter(f => f !== filter);
+    browser.storage.local.set({ customFilters: customFilters }, loadFilters);
+  });
+}
+
+function toggleDefaultFilter(filter, enable) {
+  browser.storage.local.get(["defaultFilters", "disabledDefaultFilters"], function(data) {
+    let disabledFilters = data.disabledDefaultFilters || [];
+    if (enable) {
+      disabledFilters = disabledFilters.filter(f => f !== filter); // Enable the filter
+    } else {
+      disabledFilters.push(filter); // Disable the filter
+    }
+    browser.storage.local.set({disabledDefaultFilters: disabledFilters}, function() {
+      loadFilters(); // Reload filters to reflect changes
+    });
+  });
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  initializeDefaultFilters();
+  loadFilters();
+  document.getElementById("addCustomFilter").addEventListener("click", function () {
+    const filter = document.getElementById("customFilterInput").value.trim();
+    if (filter) {
+      addFilterToList(filter, "customFilters", false, true);
+      document.getElementById("customFilterInput").value = "";
+      saveCustomFilter(filter);
+    }
+  });
+});

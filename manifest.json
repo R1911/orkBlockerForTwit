@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Twitter Softblocker",
-  "version": "1.0",
-  "description": "Removes users defined from feed.",
-  "permissions": ["activeTab"],
+  "version": "0.1",
+  "description": "Removes users that match defined variables from your feed.",
+  "permissions": ["storage", "tabs"],
+  
   "content_scripts": [
     {
-      "matches": ["https://twitter.com/*"],
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
       "js": ["content.js"]
     }
   ],

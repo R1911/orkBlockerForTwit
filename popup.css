@@ -1,18 +1,101 @@
+body {
+  background-color: #10171E; /* Darker blue, almost black */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #E1E8ED; /* Light grey text for readability */
+}
+/* Base styling for the popup container */
 .container {
-    width: 300px;
-    padding: 20px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 5px;
-  }
-  
-  button {
-    margin-top: 10px;
-  }
-  
+  width: 300px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #15202B; /* Twitter dark blue background */
+  color: #E1E8ED; /* Light grey text for readability */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Styling for headers */
+h1, h2 {
+  color: #FFFFFF; /* White for headers */
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #192734; /* Dark blue for list items */
+  margin-bottom: 5px;
+  border-radius: 5px;
+  padding: 8px 10px;
+  color: #E1E8ED;
+  transition: all 0.3s ease; /* Smooth transition for state changes */
+}
+
+li.disabled {
+  opacity: 0.5; /* Lower opacity for disabled filters */
+}
+
+.filter-text {
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.action-icon {
+  cursor: pointer;
+  color: #FF0000; /* Red for a noticeable icon */
+  background: transparent;
+  padding: 8px;
+  font-size: 18px; /* Larger font size for clear visibility */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Circular shape */
+  margin-left: auto; /* Aligns the icon to the right */
+  transition: background-color 0.2s, color 0.2s; /* Smooth transition for hover effects */
+}
+
+.action-icon:hover {
+  color: #FFFFFF; /* White color on hover for contrast */
+  background-color: #FF0000; /* Background color change on hover */
+}
+
+button {
+  background-color: #1DA1F2; /* Twitter blue for buttons */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: block; /* Ensures the button is a block element within its container */
+}
+
+button:hover {
+  background-color: #1991DA; /* Slightly darker blue on hover */
+}
+
+input[type="text"], button {
+  width: calc(100%); /* adjusts width considering padding */
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box; /* Includes padding and border in the width */
+}
+
+input[type="text"] {
+  border: 1px solid #666; /* Subtle border for input fields */
+  background-color: #192734; /* Dark background for input */
+  color: #E1E8ED; /* Light grey text for readability */
+}
+
+input[type="text"]::placeholder {
+  color: #8899A6; /* Placeholder text color for better readability */
+}
