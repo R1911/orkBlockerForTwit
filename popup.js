@@ -39,7 +39,14 @@ function addFilterToList(filter, listId, isDefault = false, isCustom = false, is
 
   const actionIcon = document.createElement("span");
   actionIcon.className = 'action-icon';
-  actionIcon.innerHTML = isEnabled ? (isCustom ? "❌" : "🚫") : "✅";  // Toggle icons based on state
+
+  // Use textContent for setting icons
+  if (isEnabled) {
+    actionIcon.textContent = isCustom ? "❌" : "🚫";
+  } else {
+    actionIcon.textContent = "✅";
+  }
+
   actionIcon.onclick = function() {
     if (isCustom) {
       deleteCustomFilter(filter);
@@ -52,6 +59,7 @@ function addFilterToList(filter, listId, isDefault = false, isCustom = false, is
   li.appendChild(actionIcon);
   list.appendChild(li);
 }
+
 
 
 
