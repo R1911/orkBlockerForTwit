@@ -4,7 +4,12 @@
   "version": "0.1",
   "description": "Removes users that match defined variables from your feed.",
   "permissions": ["storage", "tabs"],
-  
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "twitterblocker@riivo.ee",
+      "update_url": "https://raw.githubusercontent.com/R1911/orkBlockerForTwit/main/updates.json"
+    }
+  }, 
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*", "https://x.com/*"],
@@ -13,5 +18,11 @@
   ],
   "action": {
     "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "128": "icon-128.png"
   }
+  
 }

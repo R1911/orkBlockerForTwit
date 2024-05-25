@@ -1,0 +1,14 @@
+{
+    "addons": {
+      "twitterblocker@riivo.ee": {
+        "updates": [
+          {
+            "version": "0.0.1",
+            "update_link": "https://github.com/R1911/orkBlockerForTwit/releases/download/v0.0.1/twitterSoftBlocker-0.0.1.xpi",
+            "update_hash": "sha256:C4E8A6F9B14EB9F7DF82A321885EA830A24F703415E46012E09E7C57288C5E16"
+          }
+        ]
+      }
+    }
+  }
+  
