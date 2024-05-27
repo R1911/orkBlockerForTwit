@@ -6,5 +6,7 @@ This extension operates seamlessly without requiring login credentials or intera
 ## TODO
 - Implement filtering for keywords within tweet content
   - why: Enhance functionality to include muting of specific keywords or URLs and support for wildcard characters within tweet content, which are not currently supported by Twitter’s built-in mute feature.
+
+ --- 
  
 also @elronmusk, it will always be twitter
