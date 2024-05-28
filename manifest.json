@@ -1,12 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Twitter Softblocker",
-  "version": "0.1",
+  "version": "0.0.2",
   "description": "Removes users that match defined variables from your feed.",
-  "permissions": ["storage", "tabs", "webRequest", "webRequestBlocking", "<all_urls>"],
+  "permissions": ["storage", "tabs"],
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "scripts": ["background.js"]
   },
   "browser_specific_settings": {
     "gecko": {

@@ -6,6 +6,11 @@
             "version": "0.0.1",
             "update_link": "https://github.com/R1911/orkBlockerForTwit/releases/download/v0.0.1/twitterSoftBlocker-0.0.1.xpi",
             "update_hash": "sha256:8A9350CE52FC87D34151B60CD5B4792DA10310B8468EBC8068250D5F7FC02B7D"
+          },
+          {
+            "version": "0.0.2",
+            "update_link": "https://github.com/R1911/orkBlockerForTwit/releases/download/v0.0.2/twitterSoftBlocker-0.0.2.xpi",
+            "update_hash": "sha256:0A4BF76A0BC4FFCB008D8BDCA826573760BE2A1818F35D66704A8CC53B2EF0FD"
           }
         ]
       }
