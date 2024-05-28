@@ -1,24 +1,14 @@
 let processedUsernames = new Set();
 
-// Function to fetch and parse the usernames from the file
-async function fetchBlockedUsernames() {
-  const response = await fetch(browser.runtime.getURL('usernames.txt')); // Adjust the path as necessary
-  if (!response.ok) {
-    throw new Error(`Failed to fetch usernames: ${response.statusText}`);
-  }
-  const text = await response.text();
-  const usernames = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-  return new Set(usernames);
-}
-
 // Initialize the blocked usernames set
 let blockedUsernames = new Set();
 
-fetchBlockedUsernames().then(usernames => {
-  blockedUsernames = usernames;
-}).catch(error => {
-  console.error('Error fetching blocked usernames:', error);
+browser.storage.local.get("usernames", function(data) {
+  if (data.usernames) {
+    blockedUsernames = new Set(data.usernames);
+  }
 });
+
 
 function containsFilter(displayName, filters) {
   return filters.some(filter => displayName.includes(filter));

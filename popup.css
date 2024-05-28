@@ -1,9 +1,10 @@
 body {
   background-color: #10171E; /* Darker blue, almost black */
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: #E1E8ED; /* Light grey text for readability */
 }
+
 /* Base styling for the popup container */
 .container {
   width: 300px;
@@ -17,7 +18,7 @@ body {
 }
 
 /* Styling for headers */
-h1, h2 {
+h1, h2, h3 {
   color: #FFFFFF; /* White for headers */
 }
 

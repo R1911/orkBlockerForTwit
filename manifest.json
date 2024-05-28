@@ -4,6 +4,10 @@
   "version": "0.1",
   "description": "Removes users that match defined variables from your feed.",
   "permissions": ["storage", "tabs", "webRequest", "webRequestBlocking", "<all_urls>"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "twitterblocker@riivo.ee",

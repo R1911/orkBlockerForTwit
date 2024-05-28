@@ -10,10 +10,11 @@ function initializeDefaultFilters() {
 
 // Load filters from storage and display them in the popup
 function loadFilters() {
-  browser.storage.local.get(["defaultFilters", "customFilters", "disabledDefaultFilters"], function(data) {
+  browser.storage.local.get(["defaultFilters", "customFilters", "disabledDefaultFilters", "uploadedFileName"], function(data) {
     const defaultFilters = data.defaultFilters || [];
     const customFilters = data.customFilters || [];
     const disabledFilters = data.disabledDefaultFilters || [];
+    const uploadedFileName = data.uploadedFileName || "No file uploaded";
 
     const defaultFiltersList = document.getElementById("defaultFilters");
     defaultFiltersList.innerHTML = '';
@@ -27,6 +28,8 @@ function loadFilters() {
     customFilters.forEach(filter => {
       addFilterToList(filter, "customFilters", false, true, true);
     });
+
+    document.getElementById("currentFileName").textContent = `Current file: ${uploadedFileName}`;
   });
 }
 
@@ -93,6 +96,34 @@ function toggleDefaultFilter(filter, enable) {
     });
   });
 }
+
+// Handle file upload
+document.getElementById("uploadFile").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      const usernames = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+      browser.storage.local.set({ usernames: usernames, uploadedFileName: file.name }, function() {
+        document.getElementById("currentFileName").textContent = `Current file: ${file.name}`;
+        console.log(`Uploaded file: ${file.name}`);
+      });
+    };
+    reader.readAsText(file);
+  }
+});
+
+// Handle replace button click
+document.getElementById("replaceFile").addEventListener("click", function() {
+  browser.runtime.sendMessage({ action: "uploadFile" });
+});
+
+browser.runtime.onMessage.addListener(function(message) {
+  if (message.action === "updateFileName") {
+    document.getElementById("currentFileName").textContent = `Current file: ${message.fileName}`;
+  }
+});
 
 // Initialize filters on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
