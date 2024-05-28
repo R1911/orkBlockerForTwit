@@ -3,7 +3,7 @@
   "name": "Twitter Softblocker",
   "version": "0.1",
   "description": "Removes users that match defined variables from your feed.",
-  "permissions": ["storage", "tabs"],
+  "permissions": ["storage", "tabs", "webRequest", "webRequestBlocking", "<all_urls>"],
   "browser_specific_settings": {
     "gecko": {
       "id": "twitterblocker@riivo.ee",
@@ -23,6 +23,12 @@
     "16": "icon-16.png",
     "32": "icon-32.png",
     "128": "icon-128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["usernames.txt"],
+      "matches": ["<all_urls>"]
+    }
+  ]
   
 }

@@ -1,3 +1,4 @@
+// Initialize default filters if not already set
 function initializeDefaultFilters() {
   const defaultFilters = ["☭", "🇷🇺", "🇿"];
   browser.storage.local.get(["defaultFilters", "disabledDefaultFilters"], function (data) {
@@ -7,6 +8,7 @@ function initializeDefaultFilters() {
   });
 }
 
+// Load filters from storage and display them in the popup
 function loadFilters() {
   browser.storage.local.get(["defaultFilters", "customFilters", "disabledDefaultFilters"], function(data) {
     const defaultFilters = data.defaultFilters || [];
@@ -60,10 +62,6 @@ function addFilterToList(filter, listId, isDefault = false, isCustom = false, is
   list.appendChild(li);
 }
 
-
-
-
-
 function saveCustomFilter(filter) {
   browser.storage.local.get("customFilters", function (data) {
     const customFilters = data.customFilters || [];
@@ -96,7 +94,7 @@ function toggleDefaultFilter(filter, enable) {
   });
 }
 
-
+// Initialize filters on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
   initializeDefaultFilters();
   loadFilters();
@@ -108,4 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
       saveCustomFilter(filter);
     }
   });
+});
+
+// Ensure default filters are set on installation
+browser.runtime.onInstalled.addListener(() => {
+  initializeDefaultFilters();
 });
